@@ -15,7 +15,7 @@ option(BUILD_TYPE
 option(USE_CLIPPER_FOR_CPP
   "Use clipper library (ON) or kbool (OFF) for C++ portion of libarea  " ON)
 option(USE_CLIPPER_FOR_PYTHON
-  "Use clipper library (ON) or kbool (OFF) for Python portion of libarea  " OFF)
+  "Use clipper library (ON) or kbool (OFF) for Python portion of libarea  " ON)
 
 if (BUILD_TYPE)
     MESSAGE(STATUS " CMAKE_BUILD_TYPE = Release")
@@ -68,20 +68,6 @@ set(AREA_SRC_COMMON
     kurve/offset.cpp
 )
 
-set(AREA_SRC_KBOOL
-    AreaBoolean.cpp
-
-    kbool/src/booleng.cpp
-    kbool/src/record.cpp
-    kbool/src/scanbeam.cpp
-    kbool/src/graph.cpp
-    kbool/src/graphlst.cpp
-    kbool/src/instonly.cpp
-    kbool/src/line.cpp
-    kbool/src/link.cpp
-    kbool/src/lpoint.cpp    
-    kbool/src/node.cpp
-)
 
 set(AREA_SRC_CLIPPER
     AreaClipper.cpp
@@ -108,10 +94,6 @@ file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
 install(FILES ${headers} DESTINATION ${INCLUDE_INSTALL_DIR}/area COMPONENT headers)
 
 # include directories
-include_directories( 
-    kurve/
-    kbool/src/
-)
 
 # this makes the shared library
 if (USE_CLIPPER_FOR_CPP)
@@ -126,7 +108,7 @@ else (USE_CLIPPER_FOR_CPP)
       libarea
       SHARED
       ${AREA_SRC_COMMON}
-      ${AREA_SRC_KBOOL}
+      
   )
 endif (USE_CLIPPER_FOR_CPP)
 set_target_properties(libarea PROPERTIES PREFIX "")
